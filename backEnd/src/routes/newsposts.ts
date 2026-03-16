@@ -1,33 +1,20 @@
 import { Router, Request, Response } from "express";
-import { FileDB } from "../FileDB";
-import type {
-    NewsPost,
-    NewsPostCreateData,
-    NewsPostUpdateData,
-} from "../types/NewsPost";
+import { NewspostsService } from "../services/NewspostsService";
+import type { NewsPostCreateData, NewsPostUpdateData } from "../types/NewsPost";
 
 const router = Router();
-
-const fileDB = new FileDB("./db.json");
-
-const newsPostSchema = {
-    id: Number,
-    title: String,
-    text: String,
-    createDate: String,
-};
-
-fileDB.registerSchema("newspost", newsPostSchema);
-
-const newsPostTable = fileDB.getTable<
-    NewsPost,
-    NewsPostCreateData,
-    NewsPostUpdateData
->("newspost");
+const newspostsService = new NewspostsService();
 
 router.get("/", (req: Request, res: Response) => {
     try {
-        const newsposts = newsPostTable.getAll();
+        const page = Number(req.query.page ?? 0);
+        const size = Number(req.query.size ?? 10);
+
+        const newsposts = newspostsService.getAll({
+            page: Number.isNaN(page) ? 0 : page,
+            size: Number.isNaN(size) ? 10 : size,
+        });
+
         res.json(newsposts);
     } catch (error) {
         res.status(500).json({ error: "Internal server error" });
@@ -43,7 +30,7 @@ router.get("/:id", (req: Request, res: Response) => {
             return;
         }
 
-        const newspost = newsPostTable.getById(id);
+        const newspost = newspostsService.getById(id);
 
         if (!newspost) {
             res.status(404).json({ error: "News post not found" });
@@ -63,7 +50,7 @@ router.post("/", (req: Request, res: Response) => {
             text: req.body.text,
         };
 
-        const createdNewspost = newsPostTable.create(data);
+        const createdNewspost = newspostsService.create(data);
 
         res.json(createdNewspost);
     } catch (error) {
@@ -80,17 +67,17 @@ router.put("/:id", (req: Request, res: Response) => {
             return;
         }
 
-        const patch: NewsPostUpdateData = {};
+        const updateData: NewsPostUpdateData = {};
 
         if (req.body.title !== undefined) {
-            patch.title = req.body.title;
+            updateData.title = req.body.title;
         }
 
         if (req.body.text !== undefined) {
-            patch.text = req.body.text;
+            updateData.text = req.body.text;
         }
 
-        const updatedNewspost = newsPostTable.update(id, patch);
+        const updatedNewspost = newspostsService.update(id, updateData);
 
         if (!updatedNewspost) {
             res.status(404).json({ error: "News post not found" });
@@ -112,7 +99,7 @@ router.delete("/:id", (req: Request, res: Response) => {
             return;
         }
 
-        const deletedId = newsPostTable.delete(id);
+        const deletedId = newspostsService.delete(id);
 
         if (deletedId === null) {
             res.status(404).json({ error: "News post not found" });
