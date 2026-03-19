@@ -1,0 +1,17 @@
+2026-03-19T22:53:12.781Z [INFO]: POST /api/newsposts - {"title":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","text":"test","genre":"Sport","isPrivate":true}
+2026-03-19T22:53:12.784Z [WARN]: Invalid newspost create data. Details: /title must NOT have more than 50 characters
+2026-03-19T22:53:56.414Z [ERROR]: SyntaxError: Unexpected token '.', ..."etails": [...]
+}" is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parse (D:\Dan.IT\Back End\Home work\Node JS and Typescript Basic\home_work_6\backEnd\node_modules\body-parser\lib\types\json.js:72:19)
+    at D:\Dan.IT\Back End\Home work\Node JS and Typescript Basic\home_work_6\backEnd\node_modules\body-parser\lib\read.js:162:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+    at invokeCallback (D:\Dan.IT\Back End\Home work\Node JS and Typescript Basic\home_work_6\backEnd\node_modules\raw-body\index.js:238:16)
+    at done (D:\Dan.IT\Back End\Home work\Node JS and Typescript Basic\home_work_6\backEnd\node_modules\raw-body\index.js:227:7)
+    at IncomingMessage.onEnd (D:\Dan.IT\Back End\Home work\Node JS and Typescript Basic\home_work_6\backEnd\node_modules\raw-body\index.js:287:7)
+    at IncomingMessage.emit (node:events:508:28)
+    at endReadableNT (node:internal/streams/readable:1701:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:89:21)
+2026-03-19T22:54:21.694Z [INFO]: POST /api/newsposts - {"title":"test","text":"test","genre":"Music","isPrivate":true}
+2026-03-19T22:54:21.694Z [WARN]: Invalid newspost create data. Details: /genre must be equal to one of the allowed values
+2026-03-19T22:56:12.501Z [INFO]: POST /api/newsposts - {"title":"test","text":"test","genre":"Sport","isPrivate":true}

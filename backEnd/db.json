@@ -5,6 +5,14 @@
       "title": "Happy Weekends ",
       "text": "Have a great Sunday ",
       "createDate": "2026-03-14T21:38:15.910Z"
+    },
+    {
+      "id": 2,
+      "title": "test",
+      "text": "test",
+      "genre": "Sport",
+      "isPrivate": true,
+      "createDate": "2026-03-19T22:56:12.502Z"
     }
   ]
 }

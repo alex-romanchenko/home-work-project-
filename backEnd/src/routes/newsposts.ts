@@ -1,11 +1,11 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import { NewspostsService } from "../services/NewspostsService";
 import type { NewsPostCreateData, NewsPostUpdateData } from "../types/NewsPost";
 
 const router = Router();
 const newspostsService = new NewspostsService();
 
-router.get("/", (req: Request, res: Response) => {
+router.get("/", (req: Request, res: Response, next: NextFunction) => {
     try {
         const page = Number(req.query.page ?? 0);
         const size = Number(req.query.size ?? 10);
@@ -17,11 +17,19 @@ router.get("/", (req: Request, res: Response) => {
 
         res.json(newsposts);
     } catch (error) {
-        res.status(500).json({ error: "Internal server error" });
+        next(error);
     }
 });
 
-router.get("/:id", (req: Request, res: Response) => {
+router.get("/error", (req: Request, res: Response, next: NextFunction) => {
+    try {
+        newspostsService.throwError();
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
 
@@ -39,26 +47,28 @@ router.get("/:id", (req: Request, res: Response) => {
 
         res.json(newspost);
     } catch (error) {
-        res.status(500).json({ error: "Internal server error" });
+        next(error);
     }
 });
 
-router.post("/", (req: Request, res: Response) => {
+router.post("/", (req: Request, res: Response, next: NextFunction) => {
     try {
         const data: NewsPostCreateData = {
             title: req.body.title,
             text: req.body.text,
+            genre: req.body.genre,
+            isPrivate: req.body.isPrivate,
         };
 
         const createdNewspost = newspostsService.create(data);
 
         res.json(createdNewspost);
     } catch (error) {
-        res.status(500).json({ error: "Internal server error" });
+        next(error);
     }
 });
 
-router.put("/:id", (req: Request, res: Response) => {
+router.put("/:id", (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
 
@@ -77,6 +87,14 @@ router.put("/:id", (req: Request, res: Response) => {
             updateData.text = req.body.text;
         }
 
+        if (req.body.genre !== undefined) {
+            updateData.genre = req.body.genre;
+        }
+
+        if (req.body.isPrivate !== undefined) {
+            updateData.isPrivate = req.body.isPrivate;
+        }
+
         const updatedNewspost = newspostsService.update(id, updateData);
 
         if (!updatedNewspost) {
@@ -86,11 +104,11 @@ router.put("/:id", (req: Request, res: Response) => {
 
         res.json(updatedNewspost);
     } catch (error) {
-        res.status(500).json({ error: "Internal server error" });
+        next(error);
     }
 });
 
-router.delete("/:id", (req: Request, res: Response) => {
+router.delete("/:id", (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
 
@@ -108,7 +126,7 @@ router.delete("/:id", (req: Request, res: Response) => {
 
         res.sendStatus(200);
     } catch (error) {
-        res.status(500).json({ error: "Internal server error" });
+        next(error);
     }
 });
 

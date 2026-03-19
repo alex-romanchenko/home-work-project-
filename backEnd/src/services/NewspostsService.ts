@@ -1,4 +1,10 @@
 import { NewspostsRepository } from "../repositories/NewspostsRepository";
+import {
+    validateNewspostCreate,
+    validateNewspostUpdate,
+} from "../validators/newspostValidator";
+import { NewspostsServiceError } from "../errors/NewspostsServiceError";
+
 import type {
     NewsPost,
     NewsPostCreateData,
@@ -22,14 +28,31 @@ export class NewspostsService {
     }
 
     public create(data: NewsPostCreateData): NewsPost {
-        return this.newspostsRepository.create(data);
+        try {
+            validateNewspostCreate(data);
+
+            return this.newspostsRepository.create(data);
+        } catch (error) {
+            throw error; // ValidationError піде наверх
+        }
     }
 
     public update(id: number, update: NewsPostUpdateData): NewsPost | null {
-        return this.newspostsRepository.update(id, update);
+        try {
+            validateNewspostUpdate(update);
+
+            return this.newspostsRepository.update(id, update);
+        } catch (error) {
+            throw error;
+        }
     }
 
     public delete(id: number): number | null {
         return this.newspostsRepository.delete(id);
+    }
+
+    // 🔥 спеціальний endpoint для тесту помилки
+    public throwError(): never {
+        throw new NewspostsServiceError("Test service error");
     }
 }
