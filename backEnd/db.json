@@ -14,5 +14,13 @@
       "isPrivate": true,
       "createDate": "2026-03-19T22:56:12.502Z"
     }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "bob@yopmail.com",
+      "password": "18138372fad4b94533cd4881f03dc6c69296dd897234e0cee83f727e2e6b1f63",
+      "createDate": "2026-03-23T22:56:13.701Z"
+    }
   ]
 }

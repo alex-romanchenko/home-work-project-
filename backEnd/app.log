@@ -15,3 +15,17 @@
 2026-03-19T22:54:21.694Z [INFO]: POST /api/newsposts - {"title":"test","text":"test","genre":"Music","isPrivate":true}
 2026-03-19T22:54:21.694Z [WARN]: Invalid newspost create data. Details: /genre must be equal to one of the allowed values
 2026-03-19T22:56:12.501Z [INFO]: POST /api/newsposts - {"title":"test","text":"test","genre":"Sport","isPrivate":true}
+2026-03-23T22:56:13.698Z [INFO]: POST /auth/register - {"email":"bob@yopmail.com","password":"qwe123","confirmPassword":"qwe123"}
+2026-03-23T22:56:54.505Z [INFO]: POST /auth/login - {"email":"bob@yopmail.com","password":"qwe123"}
+2026-03-23T22:57:22.448Z [INFO]: GET /user - {"email":"bob@yopmail.com","password":"qwe123"}
+2026-03-23T22:59:02.020Z [INFO]: POST /auth/register - {"email":"bob@yopmail.com","password":"qwe123","confirmPassword":"qwe123"}
+2026-03-23T22:59:02.021Z [WARN]: Invalid register data. Details: user already exists
+2026-03-23T23:03:32.179Z [INFO]: POST /auth/register - {"email":"bob@yopmail.com","password":"qwe123"}
+2026-03-23T23:03:32.179Z [WARN]: Invalid register data. Details: passwords do not match
+2026-03-23T23:03:43.106Z [INFO]: POST /auth/register - {"email":"bob@yopmail.com","password":"qwe123","confirmPassword":"qwe123"}
+2026-03-23T23:03:43.106Z [WARN]: Invalid register data. Details: user already exists
+2026-03-23T23:06:40.245Z [INFO]: POST /auth/login - {"email":"bob@yopmail.com","password":"qwe123"}
+2026-03-23T23:07:19.764Z [INFO]: GET /user - {"token":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJvYkB5b3BtYWlsLmNvbSIsImlhdCI6MTc3NDMwNzIwMCwiZXhwIjoxNzc0OTEyMDAwfQ.c-txaIwODo3wwXGALMVzm2-lhhlvTV-wleiER2fG2HQ"}
+2026-03-23T23:08:37.763Z [INFO]: GET /user - {"token":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJvYkB5b3BtYWlsLmNvbSIsImlhdCI6MTc3NDMwNzIwMCwiZXhwIjoxNzc0OTEyMDAwfQ.c-txaIwODo3wwXGALMVzm2-lhhlvTV-wleiER2fG2HQ"}
+2026-03-23T23:10:57.395Z [INFO]: GET /user - {"token":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJvYkB5b3BtYWlsLmNvbSIsImlhdCI6MTc3NDMwNzIwMCwiZXhwIjoxNzc0OTEyMDAwfQ.c-txaIwODo3wwXGALMVzm2-lhhlvTV-wleiER2fG2HQ"}
+2026-03-23T23:11:52.740Z [INFO]: GET /user - {"token":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJvYkB5b3BtYWlsLmNvbSIsImlhdCI6MTc3NDMwNzIwMCwiZXhwIjoxNzc0OTEyMDAwfQ.c-txaIwODo3wwXGALMVzm2-lhhlvTV-wleiER2fG2HQ"}
