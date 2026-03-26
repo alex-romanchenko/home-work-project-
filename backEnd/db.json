@@ -1,18 +1,36 @@
 {
   "newspost": [
     {
-      "id": 1,
-      "title": "Happy Weekends ",
-      "text": "Have a great Sunday ",
-      "createDate": "2026-03-14T21:38:15.910Z"
-    },
-    {
       "id": 2,
       "title": "test",
       "text": "test",
       "genre": "Sport",
       "isPrivate": true,
       "createDate": "2026-03-19T22:56:12.502Z"
+    },
+    {
+      "id": 3,
+      "title": "My news",
+      "text": "Some text",
+      "genre": "Sport",
+      "isPrivate": false,
+      "createDate": "2026-03-26T22:21:27.268Z"
+    },
+    {
+      "id": 4,
+      "title": "Created from Postman",
+      "text": "This post was created from Postman scenario",
+      "genre": "Sport",
+      "isPrivate": false,
+      "createDate": "2026-03-26T23:35:58.665Z"
+    },
+    {
+      "id": 5,
+      "title": "Updated from Postman2",
+      "text": "This post was created from Postman scenario",
+      "genre": "Sport",
+      "isPrivate": false,
+      "createDate": "2026-03-26T23:36:45.141Z"
     }
   ],
   "users": [
@@ -21,6 +39,66 @@
       "email": "bob@yopmail.com",
       "password": "18138372fad4b94533cd4881f03dc6c69296dd897234e0cee83f727e2e6b1f63",
       "createDate": "2026-03-23T22:56:13.701Z"
+    },
+    {
+      "id": 2,
+      "email": "test123@yopmail.com",
+      "password": "18138372fad4b94533cd4881f03dc6c69296dd897234e0cee83f727e2e6b1f63",
+      "createDate": "2026-03-26T22:00:21.239Z"
+    },
+    {
+      "id": 3,
+      "email": "test323@yopmail.com",
+      "password": "ada654ce1020167abbd28f13b8c30b70f551fbed988ee8aac3c0468a814f542e",
+      "createDate": "2026-03-26T22:52:40.016Z"
+    },
+    {
+      "id": 4,
+      "email": "test423@yopmail.com",
+      "password": "af946b185eadee245013b4e02f192fd09a19df067b007230ab8cd124d3088527",
+      "createDate": "2026-03-26T22:59:55.905Z"
+    },
+    {
+      "id": 5,
+      "email": "test443@yopmail.com",
+      "password": "221473ac6b560e2c618b7812ab05505f14e29ac96af2768e9cf58676277e872b",
+      "createDate": "2026-03-26T23:21:55.637Z"
+    },
+    {
+      "id": 6,
+      "email": "test453@yopmail.com",
+      "password": "337a9545e32f4899687f74145e22542ea67fad1a1ea54ec4e219042544d1196c",
+      "createDate": "2026-03-26T23:25:27.587Z"
+    },
+    {
+      "id": 7,
+      "email": "test473@yopmail.com",
+      "password": "b6d0dcd4b63c77a50aceccce8363c12831ebd8948da74c471db5153b676d9cef",
+      "createDate": "2026-03-26T23:26:04.897Z"
+    },
+    {
+      "id": 8,
+      "email": "test479@yopmail.com",
+      "password": "b6d0dcd4b63c77a50aceccce8363c12831ebd8948da74c471db5153b676d9cef",
+      "createDate": "2026-03-26T23:27:36.402Z"
+    },
+    {
+      "id": 9,
+      "email": "test1479@yopmail.com",
+      "password": "b6d0dcd4b63c77a50aceccce8363c12831ebd8948da74c471db5153b676d9cef",
+      "createDate": "2026-03-26T23:35:36.611Z"
+    },
+    {
+      "id": 10,
+      "email": "test5479@yopmail.com",
+      "password": "b6d0dcd4b63c77a50aceccce8363c12831ebd8948da74c471db5153b676d9cef",
+      "createDate": "2026-03-26T23:37:55.051Z"
+    },
+    {
+      "id": 11,
+      "email": "test9479@yopmail.com",
+      "password": "b6d0dcd4b63c77a50aceccce8363c12831ebd8948da74c471db5153b676d9cef",
+      "createDate": "2026-03-26T23:38:31.451Z"
     }
   ]
 }

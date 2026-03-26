@@ -29,3 +29,88 @@
 2026-03-23T23:08:37.763Z [INFO]: GET /user - {"token":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJvYkB5b3BtYWlsLmNvbSIsImlhdCI6MTc3NDMwNzIwMCwiZXhwIjoxNzc0OTEyMDAwfQ.c-txaIwODo3wwXGALMVzm2-lhhlvTV-wleiER2fG2HQ"}
 2026-03-23T23:10:57.395Z [INFO]: GET /user - {"token":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJvYkB5b3BtYWlsLmNvbSIsImlhdCI6MTc3NDMwNzIwMCwiZXhwIjoxNzc0OTEyMDAwfQ.c-txaIwODo3wwXGALMVzm2-lhhlvTV-wleiER2fG2HQ"}
 2026-03-23T23:11:52.740Z [INFO]: GET /user - {"token":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJvYkB5b3BtYWlsLmNvbSIsImlhdCI6MTc3NDMwNzIwMCwiZXhwIjoxNzc0OTEyMDAwfQ.c-txaIwODo3wwXGALMVzm2-lhhlvTV-wleiER2fG2HQ"}
+2026-03-26T22:00:21.234Z [INFO]: POST /auth/register - {"email":"test123@yopmail.com","password":"qwe123","confirmPassword":"qwe123"}
+2026-03-26T22:04:11.188Z [INFO]: POST /auth/login - {"email":"test123@yopmail.com","password":"qwe123"}
+2026-03-26T22:08:32.394Z [INFO]: GET /user - no body
+2026-03-26T22:19:27.016Z [INFO]: GET /api/newsposts - no body
+2026-03-26T22:20:09.335Z [INFO]: GET /api/newsposts/1 - no body
+2026-03-26T22:21:27.266Z [INFO]: POST /api/newsposts - {"title":"My news","text":"Some text","genre":"Sport","isPrivate":false}
+2026-03-26T22:22:25.647Z [INFO]: PUT /api/newsposts/1 - {"title":"Updated news"}
+2026-03-26T22:23:00.456Z [INFO]: DELETE /api/newsposts/1 - no body
+2026-03-26T22:48:13.767Z [INFO]: POST /auth/register - {"email":"{{email}}","password":"qwe123","confirmPassword":"qwe123"}
+2026-03-26T22:48:13.769Z [WARN]: Invalid register data. Details: email is not valid
+2026-03-26T22:51:04.834Z [INFO]: POST /auth/register/auth/register - {"email":"test123@yopmail.com","password":"qwe123","confirmPassword":"qwe123"}
+2026-03-26T22:51:13.682Z [INFO]: POST /auth/register/auth/register - {"email":"test123@yopmail.com","password":"qwe123","confirmPassword":"qwe123"}
+2026-03-26T22:51:43.676Z [INFO]: POST /auth/register - {"email":"test123@yopmail.com","password":"qwe123","confirmPassword":"qwe123"}
+2026-03-26T22:51:43.676Z [WARN]: Invalid register data. Details: user already exists
+2026-03-26T22:52:17.512Z [INFO]: POST /auth/register - {"email":"test323@yopmail.com","password":"qwr123","confirmPassword":"qwer23"}
+2026-03-26T22:52:17.513Z [WARN]: Invalid register data. Details: passwords do not match
+2026-03-26T22:52:26.684Z [INFO]: POST /auth/register - {"email":"test323@yopmail.com","password":"qwr123","confirmPassword":"qwr23"}
+2026-03-26T22:52:26.684Z [WARN]: Invalid register data. Details: passwords do not match
+2026-03-26T22:52:40.015Z [INFO]: POST /auth/register - {"email":"test323@yopmail.com","password":"qwr123","confirmPassword":"qwr123"}
+2026-03-26T22:53:21.631Z [INFO]: POST /auth/register/auth/register - {"email":"test323@yopmail.com","password":"qwr123","confirmPassword":"qwr123"}
+2026-03-26T22:54:46.717Z [INFO]: POST /auth/register/auth/register - {"email":"test423@yopmail.com","password":"qwr423","confirmPassword":"qwr423"}
+2026-03-26T22:58:23.152Z [INFO]: POST /auth/register/auth/register - {"email":"test423@yopmail.com","password":"qwr423","confirmPassword":"qwr423"}
+2026-03-26T22:59:55.904Z [INFO]: POST /auth/register - {"email":"test423@yopmail.com","password":"qwr423","confirmPassword":"qwr423"}
+2026-03-26T23:00:37.230Z [INFO]: POST /auth/register/auth/register - {"email":"test443@yopmail.com","password":"qwr443","confirmPassword":"qwr443"}
+2026-03-26T23:04:22.627Z [INFO]: POST /auth/login - {"email":"test123@yopmail.com","password":"qwe123"}
+2026-03-26T23:06:28.630Z [INFO]: GET /api/newsposts - no body
+2026-03-26T23:08:01.524Z [INFO]: GET /api/newsposts/2 - no body
+2026-03-26T23:09:18.785Z [INFO]: POST /api/newsposts - {"title":"Created from Postman","text":"This post was created from Postman scenario","genre":"Sport","isPrivate":false}
+2026-03-26T23:10:21.310Z [INFO]: PUT /api/newsposts/1 - {"title":"Updated news"}
+2026-03-26T23:11:09.310Z [INFO]: PUT /api/newsposts/1 - {"title":"Updated from Postman"}
+2026-03-26T23:11:28.398Z [INFO]: PUT /api/newsposts/4 - {"title":"Updated from Postman"}
+2026-03-26T23:12:20.977Z [INFO]: DELETE /api/newsposts/4 - no body
+2026-03-26T23:15:43.797Z [INFO]: GET /api/newsposts/4 - no body
+2026-03-26T23:17:41.320Z [INFO]: GET /api/newsposts/ - no body
+2026-03-26T23:21:47.302Z [INFO]: POST /auth/register/auth/register - {"email":"test443@yopmail.com","password":"qwr443","confirmPassword":"qwr443"}
+2026-03-26T23:21:55.636Z [INFO]: POST /auth/register - {"email":"test443@yopmail.com","password":"qwr443","confirmPassword":"qwr443"}
+2026-03-26T23:24:49.005Z [INFO]: POST /auth/register - {"email":"test443@yopmail.com","password":"qwr443","confirmPassword":"qwr443"}
+2026-03-26T23:24:49.006Z [WARN]: Invalid register data. Details: user already exists
+2026-03-26T23:25:27.586Z [INFO]: POST /auth/register - {"email":"test453@yopmail.com","password":"qwr463","confirmPassword":"qwr463"}
+2026-03-26T23:25:38.799Z [INFO]: POST /auth/register - {"email":"test453@yopmail.com","password":"qwr463","confirmPassword":"qwr463"}
+2026-03-26T23:25:38.800Z [WARN]: Invalid register data. Details: user already exists
+2026-03-26T23:26:04.896Z [INFO]: POST /auth/register - {"email":"test473@yopmail.com","password":"qwr663","confirmPassword":"qwr663"}
+2026-03-26T23:26:04.958Z [INFO]: POST /auth/login - {"email":"test123@yopmail.com","password":"qwe123"}
+2026-03-26T23:26:04.999Z [INFO]: GET /api/newsposts - no body
+2026-03-26T23:26:05.065Z [INFO]: GET /api/newsposts/2 - no body
+2026-03-26T23:26:05.125Z [INFO]: POST /api/newsposts - {"title":"Created from Postman","text":"This post was created from Postman scenario","genre":"Sport","isPrivate":false}
+2026-03-26T23:26:05.198Z [INFO]: PUT /api/newsposts/1 - {"title":"Updated news"}
+2026-03-26T23:26:05.263Z [INFO]: DELETE /api/newsposts/4 - no body
+2026-03-26T23:26:25.492Z [INFO]: PUT /api/newsposts/4 - {"title":"Updated from Postman"}
+2026-03-26T23:26:43.046Z [INFO]: PUT /api/newsposts/ - {"title":"Updated from Postman"}
+2026-03-26T23:26:52.562Z [INFO]: PUT /api/newsposts/%7B%7BcreatedPostId%7D - {"title":"Updated from Postman"}
+2026-03-26T23:27:03.285Z [INFO]: POST /auth/register - {"email":"test473@yopmail.com","password":"qwr663","confirmPassword":"qwr663"}
+2026-03-26T23:27:03.285Z [WARN]: Invalid register data. Details: user already exists
+2026-03-26T23:27:36.401Z [INFO]: POST /auth/register - {"email":"test479@yopmail.com","password":"qwr663","confirmPassword":"qwr663"}
+2026-03-26T23:27:36.500Z [INFO]: POST /auth/login - {"email":"test123@yopmail.com","password":"qwe123"}
+2026-03-26T23:27:36.537Z [INFO]: GET /api/newsposts - no body
+2026-03-26T23:27:36.564Z [INFO]: GET /api/newsposts/2 - no body
+2026-03-26T23:27:36.624Z [INFO]: POST /api/newsposts - {"title":"Created from Postman","text":"This post was created from Postman scenario","genre":"Sport","isPrivate":false}
+2026-03-26T23:27:36.704Z [INFO]: PUT /api/newsposts/1 - {"title":"Updated news"}
+2026-03-26T23:27:36.752Z [INFO]: DELETE /api/newsposts/4 - no body
+2026-03-26T23:35:36.611Z [INFO]: POST /auth/register - {"email":"test1479@yopmail.com","password":"qwr663","confirmPassword":"qwr663"}
+2026-03-26T23:35:43.219Z [INFO]: POST /auth/login - {"email":"test123@yopmail.com","password":"qwe123"}
+2026-03-26T23:35:47.593Z [INFO]: GET /api/newsposts/ - no body
+2026-03-26T23:35:53.949Z [INFO]: GET /api/newsposts/2 - no body
+2026-03-26T23:35:58.665Z [INFO]: POST /api/newsposts - {"title":"Created from Postman","text":"This post was created from Postman scenario","genre":"Sport","isPrivate":false}
+2026-03-26T23:36:04.169Z [INFO]: PUT /api/newsposts/%7B%7BcreatedPostId%7D - {"title":"Updated from Postman"}
+2026-03-26T23:36:16.646Z [INFO]: PUT /api/newsposts/%7B%7BcreatedPostId%7D - {"title":"Updated from Postman"}
+2026-03-26T23:36:26.814Z [INFO]: PUT /api/newsposts/%7B%7BcreatedPostId%7D - {"title":"Updated from Postman1"}
+2026-03-26T23:36:45.140Z [INFO]: POST /api/newsposts - {"title":"Created from Postman1","text":"This post was created from Postman scenario","genre":"Sport","isPrivate":false}
+2026-03-26T23:36:55.377Z [INFO]: PUT /api/newsposts/%7B%7BcreatedPostId%7D - {"title":"Updated from Postman2"}
+2026-03-26T23:37:36.283Z [INFO]: PUT /api/newsposts/5 - {"title":"Updated from Postman2"}
+2026-03-26T23:37:55.051Z [INFO]: POST /auth/register - {"email":"test5479@yopmail.com","password":"qwr663","confirmPassword":"qwr663"}
+2026-03-26T23:37:55.155Z [INFO]: POST /auth/login - {"email":"test123@yopmail.com","password":"qwe123"}
+2026-03-26T23:37:55.197Z [INFO]: GET /api/newsposts - no body
+2026-03-26T23:37:55.280Z [INFO]: GET /api/newsposts/2 - no body
+2026-03-26T23:37:55.349Z [INFO]: POST /api/newsposts - {"title":"Created from Postman","text":"This post was created from Postman scenario","genre":"Sport","isPrivate":false}
+2026-03-26T23:37:55.434Z [INFO]: PUT /api/newsposts/1 - {"title":"Updated news"}
+2026-03-26T23:37:55.503Z [INFO]: DELETE /api/newsposts/6 - no body
+2026-03-26T23:38:31.450Z [INFO]: POST /auth/register - {"email":"test9479@yopmail.com","password":"qwr663","confirmPassword":"qwr663"}
+2026-03-26T23:38:31.553Z [INFO]: POST /auth/login - {"email":"test123@yopmail.com","password":"qwe123"}
+2026-03-26T23:38:31.594Z [INFO]: GET /api/newsposts - no body
+2026-03-26T23:38:31.693Z [INFO]: GET /api/newsposts/2 - no body
+2026-03-26T23:38:31.747Z [INFO]: POST /api/newsposts - {"title":"Created from Postman","text":"This post was created from Postman scenario","genre":"Sport","isPrivate":false}
+2026-03-26T23:38:31.796Z [INFO]: PUT /api/newsposts/6 - {"title":"Updated from Postman2"}
+2026-03-26T23:38:31.840Z [INFO]: DELETE /api/newsposts/6 - no body
