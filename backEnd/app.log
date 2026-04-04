@@ -128,3 +128,15 @@
 2026-04-04T20:42:20.736Z [INFO]: DELETE /api/newsposts/1 - no body
 2026-04-04T20:42:20.750Z [INFO]: GET /api/newsposts - no body
 2026-04-04T20:42:22.310Z [INFO]: DELETE /api/newsposts/2 - no body
+2026-04-04T23:17:18.692Z [INFO]: POST /auth/login - {"email":"test6@gmail.com","password":"abc123"}
+2026-04-04T23:17:35.979Z [INFO]: POST /auth/login - {"email":"test@gmail.com","password":"963451"}
+2026-04-04T23:25:16.082Z [INFO]: GET /api/newsposts/ - no body
+2026-04-04T23:26:18.206Z [INFO]: DELETE /api/newsposts/5 - no body
+2026-04-04T23:27:04.315Z [INFO]: GET /api/newsposts - no body
+2026-04-04T23:27:04.362Z [INFO]: GET /api/newsposts - no body
+2026-04-04T23:27:36.342Z [INFO]: POST /auth/login - {"email":"test@gmail.com","password":"963451"}
+2026-04-04T23:28:25.605Z [INFO]: POST /api/newsposts - {"title":"My test post for my login page","text":"Helle, here is my fist post on my backend server. Working good "}
+2026-04-04T23:28:25.665Z [INFO]: GET /api/newsposts - no body
+2026-04-04T23:28:55.118Z [INFO]: POST /auth/login - {"email":"test@gmail.com","password":"963451"}
+2026-04-04T23:28:56.292Z [INFO]: DELETE /api/newsposts/7 - no body
+2026-04-04T23:28:56.306Z [INFO]: GET /api/newsposts - no body

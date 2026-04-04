@@ -1,3 +1,5 @@
+console.log("LOGIN METHOD STARTED");
+
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import { UsersRepository } from "../repositories/UsersRepository";
@@ -54,6 +56,11 @@ export class AuthService {
             password: hashedPassword,
         });
 
+        console.log("REGISTER email:", email);
+        console.log("REGISTER raw password:", password);
+        console.log("REGISTER hashed password:", hashedPassword);
+        console.log("REGISTER created user:", createdUser);
+
         return {
             token: this.generateToken(createdUser),
         };
@@ -63,12 +70,17 @@ export class AuthService {
         const { email, password } = data;
 
         const user = await this.usersRepository.getByEmail(email);
+        console.log("LOGIN email:", email);
+        console.log("LOGIN raw password:", password);
+        console.log("LOGIN user from db:", user);
 
         if (!user) {
             throw new ValidationError("Invalid login data", ["user not found"]);
         }
 
         const hashedPassword = this.hashPassword(password);
+        console.log("LOGIN hashed password:", hashedPassword);
+        console.log("LOGIN db password:", user?.password);
 
         if (user.password !== hashedPassword) {
             throw new ValidationError("Invalid login data", ["wrong password"]);
