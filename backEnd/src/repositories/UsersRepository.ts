@@ -1,29 +1,17 @@
-import { FileDB } from "../FileDB";
-import type { User } from "../types/User";
+import { AppDataSource } from "../data-source";
+import { User } from "../entities/User";
 
 export class UsersRepository {
-    private readonly usersTable;
+    private readonly usersRepository = AppDataSource.getRepository(User);
 
-    constructor() {
-        const fileDB = new FileDB("./db.json");
-
-        const userSchema = {
-            id: Number,
-            email: String,
-            password: String,
-        };
-
-        fileDB.registerSchema("users", userSchema);
-
-        this.usersTable = fileDB.getTable<User, Omit<User, "id">, Partial<Omit<User, "id">>>("users");
+    public async getByEmail(email: string): Promise<User | null> {
+        return this.usersRepository.findOne({
+            where: { email },
+        });
     }
 
-    public getByEmail(email: string): User | null {
-        const users = this.usersTable.getAll();
-        return users.find((user) => user.email === email) ?? null;
-    }
-
-    public create(user: Omit<User, "id">): User {
-        return this.usersTable.create(user);
+    public async create(user: Omit<User, "id" | "newsposts">): Promise<User> {
+        const newUser = this.usersRepository.create(user);
+        return this.usersRepository.save(newUser);
     }
 }

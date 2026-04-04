@@ -7,6 +7,7 @@ import userRouter from "./routes/user";
 import passport from "./auth/passport";
 import { requestLogger } from "./middlewares/requestLogger";
 import { errorHandler } from "./middlewares/errorHandler";
+import { AppDataSource } from "./data-source";
 
 dotenv.config();
 
@@ -30,6 +31,14 @@ app.get("/", (req, res) => {
 
 app.use(errorHandler);
 
-app.listen(PORT, HOST, () => {
-    console.log(`Server is running at http://${HOST}:${PORT}`);
-});
+AppDataSource.initialize()
+    .then(() => {
+        console.log("Database connected");
+
+        app.listen(PORT, HOST, () => {
+            console.log(`Server is running at http://${HOST}:${PORT}`);
+        });
+    })
+    .catch((error) => {
+        console.error("Database connection error:", error);
+    });

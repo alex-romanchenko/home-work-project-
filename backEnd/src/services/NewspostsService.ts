@@ -6,11 +6,11 @@ import {
 import { NewspostsServiceError } from "../errors/NewspostsServiceError";
 
 import type {
-    NewsPost,
     NewsPostCreateData,
     NewsPostUpdateData,
     PaginationParams,
 } from "../types/NewsPost";
+import { Newspost } from "../entities/Newspost";
 
 export class NewspostsService {
     private readonly newspostsRepository: NewspostsRepository;
@@ -19,39 +19,30 @@ export class NewspostsService {
         this.newspostsRepository = new NewspostsRepository();
     }
 
-    public getAll(params: PaginationParams): NewsPost[] {
+    public async getAll(params: PaginationParams): Promise<Newspost[]> {
         return this.newspostsRepository.getAll(params);
     }
 
-    public getById(id: number): NewsPost | null {
+    public async getById(id: number): Promise<Newspost | null> {
         return this.newspostsRepository.getById(id);
     }
 
-    public create(data: NewsPostCreateData): NewsPost {
-        try {
-            validateNewspostCreate(data);
+    public async create(data: NewsPostCreateData, userId: number): Promise<Newspost | null> {
+        validateNewspostCreate(data);
 
-            return this.newspostsRepository.create(data);
-        } catch (error) {
-            throw error; // ValidationError піде наверх
-        }
+        return this.newspostsRepository.create(data, userId);
     }
 
-    public update(id: number, update: NewsPostUpdateData): NewsPost | null {
-        try {
-            validateNewspostUpdate(update);
+    public async update(id: number, update: NewsPostUpdateData): Promise<Newspost | null> {
+        validateNewspostUpdate(update);
 
-            return this.newspostsRepository.update(id, update);
-        } catch (error) {
-            throw error;
-        }
+        return this.newspostsRepository.update(id, update);
     }
 
-    public delete(id: number): number | null {
+    public async delete(id: number): Promise<number | null> {
         return this.newspostsRepository.delete(id);
     }
 
-    // 🔥 спеціальний endpoint для тесту помилки
     public throwError(): never {
         throw new NewspostsServiceError("Test service error");
     }

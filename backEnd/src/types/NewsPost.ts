@@ -1,17 +1,23 @@
-export type NewsGenre = "Politic" | "Business" | "Sport" | "Other";
-
 export interface NewsPost {
     id: number;
     title: string;
     text: string;
-    genre: NewsGenre;
-    isPrivate: boolean;
-    createDate: string;
+    author: {
+        id: number;
+        email: string;
+        password: string;
+    };
 }
 
-export type NewsPostCreateData = Omit<NewsPost, "id" | "createDate">;
+export type NewsPostCreateData = {
+    title: string;
+    text: string;
+};
 
-export type NewsPostUpdateData = Partial<Omit<NewsPost, "id" | "createDate">>;
+export type NewsPostUpdateData = {
+    title?: string;
+    text?: string;
+};
 
 export type PaginationParams = {
     page: number;

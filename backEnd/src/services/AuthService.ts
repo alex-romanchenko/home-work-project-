@@ -28,7 +28,7 @@ export class AuthService {
         return `Bearer ${token}`;
     }
 
-    public register(data: RegisterData): { token: string } {
+    public async register(data: RegisterData): Promise<{ token: string }> {
         const { email, password, confirmPassword } = data;
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -41,7 +41,7 @@ export class AuthService {
             throw new ValidationError("Invalid register data", ["passwords do not match"]);
         }
 
-        const existingUser = this.usersRepository.getByEmail(email);
+        const existingUser = await this.usersRepository.getByEmail(email);
 
         if (existingUser) {
             throw new ValidationError("Invalid register data", ["user already exists"]);
@@ -49,7 +49,7 @@ export class AuthService {
 
         const hashedPassword = this.hashPassword(password);
 
-        const createdUser = this.usersRepository.create({
+        const createdUser = await this.usersRepository.create({
             email,
             password: hashedPassword,
         });
@@ -59,10 +59,10 @@ export class AuthService {
         };
     }
 
-    public login(data: LoginData): { token: string } {
+    public async login(data: LoginData): Promise<{ token: string }> {
         const { email, password } = data;
 
-        const user = this.usersRepository.getByEmail(email);
+        const user = await this.usersRepository.getByEmail(email);
 
         if (!user) {
             throw new ValidationError("Invalid login data", ["user not found"]);
@@ -79,9 +79,9 @@ export class AuthService {
         };
     }
 
-    public getUserByEmail(email: string): User | null {
+    public async getUserByEmail(email: string): Promise<User | null> {
         try {
-            return this.usersRepository.getByEmail(email);
+            return await this.usersRepository.getByEmail(email);
         } catch {
             throw new NewspostsServiceError("Failed to get user");
         }

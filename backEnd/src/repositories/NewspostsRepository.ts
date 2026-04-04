@@ -1,55 +1,130 @@
-import { FileDB } from "../FileDB";
+import { AppDataSource } from "../data-source";
+import { Newspost } from "../entities/Newspost";
+import { User } from "../entities/User";
 import type {
-    NewsPost,
     NewsPostCreateData,
     NewsPostUpdateData,
     PaginationParams,
 } from "../types/NewsPost";
 
 export class NewspostsRepository {
-    private readonly newsPostTable;
+    private readonly newspostRepository = AppDataSource.getRepository(Newspost);
+    private readonly userRepository = AppDataSource.getRepository(User);
 
-    constructor() {
-        const fileDB = new FileDB("./db.json");
-
-        const newsPostSchema = {
-            id: Number,
-            title: String,
-            text: String,
-            createDate: String,
-        };
-
-        fileDB.registerSchema("newspost", newsPostSchema);
-
-        this.newsPostTable = fileDB.getTable<
-            NewsPost,
-            NewsPostCreateData,
-            NewsPostUpdateData
-        >("newspost");
+    public async getAll(params: PaginationParams): Promise<Newspost[]> {
+        return this.newspostRepository.find({
+            relations: ["author"],
+            select: {
+                id: true,
+                title: true,
+                text: true,
+                author: {
+                    id: true,
+                    email: true,
+                },
+            },
+            skip: params.page * params.size,
+            take: params.size,
+            order: {
+                id: "ASC",
+            },
+        });
     }
 
-    public getAll(params: PaginationParams): NewsPost[] {
-        const allNews = this.newsPostTable.getAll();
-
-        const start = params.page * params.size;
-        const end = start + params.size;
-
-        return allNews.slice(start, end);
+    public async getById(id: number): Promise<Newspost | null> {
+        return this.newspostRepository.findOne({
+            where: { id },
+            relations: ["author"],
+            select: {
+            id: true,
+            title: true,
+            text: true,
+            author: {
+                id: true,
+                email: true,
+            },
+        },
+        });
     }
 
-    public getById(id: number): NewsPost | null {
-        return this.newsPostTable.getById(id);
+    public async create(data: NewsPostCreateData, userId: number): Promise<Newspost | null> {
+    const user = await this.userRepository.findOne({
+        where: { id: userId },
+    });
+
+    if (!user) {
+        throw new Error("Author not found");
     }
 
-    public create(data: NewsPostCreateData): NewsPost {
-        return this.newsPostTable.create(data);
+    const newspost = this.newspostRepository.create({
+        title: data.title,
+        text: data.text,
+        author: user,
+    });
+
+    const savedNewspost = await this.newspostRepository.save(newspost);
+
+    return this.newspostRepository.findOne({
+        where: { id: savedNewspost.id },
+        relations: ["author"],
+        select: {
+            id: true,
+            title: true,
+            text: true,
+            author: {
+                id: true,
+                email: true,
+            },
+        },
+    });
+}
+
+public async update(id: number, update: NewsPostUpdateData): Promise<Newspost | null> {
+    const newspost = await this.newspostRepository.findOne({
+        where: { id },
+        relations: ["author"],
+    });
+
+    if (!newspost) {
+        return null;
     }
 
-    public update(id: number, update: NewsPostUpdateData): NewsPost | null {
-        return this.newsPostTable.update(id, update);
+    if (update.title !== undefined) {
+        newspost.title = update.title;
     }
 
-    public delete(id: number): number | null {
-        return this.newsPostTable.delete(id);
+    if (update.text !== undefined) {
+        newspost.text = update.text;
+    }
+
+    await this.newspostRepository.save(newspost);
+
+    return this.newspostRepository.findOne({
+        where: { id },
+        relations: ["author"],
+        select: {
+            id: true,
+            title: true,
+            text: true,
+            author: {
+                id: true,
+                email: true,
+            },
+        },
+    });
+}
+
+    public async delete(id: number): Promise<number | null> {
+        const newspost = await this.newspostRepository.findOne({
+            where: { id },
+        });
+
+        if (!newspost) {
+            return null;
+        }
+
+        await this.newspostRepository.remove(newspost);
+
+        return id;
     }
 }

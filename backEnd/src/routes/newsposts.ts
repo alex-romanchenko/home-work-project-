@@ -1,16 +1,17 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { NewspostsService } from "../services/NewspostsService";
 import type { NewsPostCreateData, NewsPostUpdateData } from "../types/NewsPost";
+import passport from "../auth/passport";
 
 const router = Router();
 const newspostsService = new NewspostsService();
 
-router.get("/", (req: Request, res: Response, next: NextFunction) => {
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const page = Number(req.query.page ?? 0);
         const size = Number(req.query.size ?? 10);
 
-        const newsposts = newspostsService.getAll({
+        const newsposts = await newspostsService.getAll({
             page: Number.isNaN(page) ? 0 : page,
             size: Number.isNaN(size) ? 10 : size,
         });
@@ -29,7 +30,7 @@ router.get("/error", (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
-router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
+router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
 
@@ -38,7 +39,7 @@ router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
             return;
         }
 
-        const newspost = newspostsService.getById(id);
+        const newspost = await newspostsService.getById(id);
 
         if (!newspost) {
             res.status(404).json({ error: "News post not found" });
@@ -51,24 +52,28 @@ router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
-router.post("/", (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const data: NewsPostCreateData = {
-            title: req.body.title,
-            text: req.body.text,
-            genre: req.body.genre,
-            isPrivate: req.body.isPrivate,
-        };
+router.post(
+    "/",
+    passport.authenticate("bearer", { session: false }),
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const data: NewsPostCreateData = {
+                title: req.body.title,
+                text: req.body.text,
+            };
 
-        const createdNewspost = newspostsService.create(data);
+            const user = req.user as { id: number };
 
-        res.json(createdNewspost);
-    } catch (error) {
-        next(error);
+            const createdNewspost = await newspostsService.create(data, user.id);
+
+            res.json(createdNewspost);
+        } catch (error) {
+            next(error);
+        }
     }
-});
+);
 
-router.put("/:id", (req: Request, res: Response, next: NextFunction) => {
+router.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
 
@@ -87,15 +92,7 @@ router.put("/:id", (req: Request, res: Response, next: NextFunction) => {
             updateData.text = req.body.text;
         }
 
-        if (req.body.genre !== undefined) {
-            updateData.genre = req.body.genre;
-        }
-
-        if (req.body.isPrivate !== undefined) {
-            updateData.isPrivate = req.body.isPrivate;
-        }
-
-        const updatedNewspost = newspostsService.update(id, updateData);
+        const updatedNewspost = await newspostsService.update(id, updateData);
 
         if (!updatedNewspost) {
             res.status(404).json({ error: "News post not found" });
@@ -108,7 +105,7 @@ router.put("/:id", (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
-router.delete("/:id", (req: Request, res: Response, next: NextFunction) => {
+router.delete("/:id", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
 
@@ -117,7 +114,7 @@ router.delete("/:id", (req: Request, res: Response, next: NextFunction) => {
             return;
         }
 
-        const deletedId = newspostsService.delete(id);
+        const deletedId = await newspostsService.delete(id);
 
         if (deletedId === null) {
             res.status(404).json({ error: "News post not found" });

@@ -114,3 +114,17 @@
 2026-03-26T23:38:31.747Z [INFO]: POST /api/newsposts - {"title":"Created from Postman","text":"This post was created from Postman scenario","genre":"Sport","isPrivate":false}
 2026-03-26T23:38:31.796Z [INFO]: PUT /api/newsposts/6 - {"title":"Updated from Postman2"}
 2026-03-26T23:38:31.840Z [INFO]: DELETE /api/newsposts/6 - no body
+2026-04-04T19:27:36.272Z [INFO]: POST /auth/register - {"email":"test9499@yopmail.com","password":"qwr663","confirmPassword":"qwr663"}
+2026-04-04T19:29:00.550Z [INFO]: POST /auth/login - {"email":"test9499@yopmail.com","password":"qwr663"}
+2026-04-04T19:31:13.372Z [INFO]: POST /api/newsposts - {"title":"My first news","text":"Hello from TypeORM"}
+2026-04-04T19:36:57.449Z [INFO]: POST /api/newsposts - {"title":"My first news","text":"Hello from TypeORM"}
+2026-04-04T19:39:30.562Z [INFO]: POST /api/newsposts - {"title":"My first news again","text":"Hello from TypeORM, Welcome"}
+2026-04-04T19:40:10.945Z [INFO]: POST /api/newsposts - {"title":"My first news again","text":"Hello from TypeORM, Welcome"}
+2026-04-04T20:34:34.574Z [INFO]: POST /api/newsposts - {"title":"My first news again","text":"Hello from TypeORM, Welcome"}
+2026-04-04T20:39:31.518Z [INFO]: GET /api/newsposts - no body
+2026-04-04T20:39:31.630Z [INFO]: GET /favicon.ico - no body
+2026-04-04T20:42:15.416Z [INFO]: GET /api/newsposts - no body
+2026-04-04T20:42:15.465Z [INFO]: GET /api/newsposts - no body
+2026-04-04T20:42:20.736Z [INFO]: DELETE /api/newsposts/1 - no body
+2026-04-04T20:42:20.750Z [INFO]: GET /api/newsposts - no body
+2026-04-04T20:42:22.310Z [INFO]: DELETE /api/newsposts/2 - no body

@@ -19,6 +19,9 @@
     "jsonwebtoken": "^9.0.3",
     "passport": "^0.7.0",
     "passport-http-bearer": "^1.0.1",
+    "pg": "^8.20.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.28",
     "winston": "^3.19.0"
   },
   "devDependencies": {

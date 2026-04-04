@@ -7,11 +7,11 @@ const JWT_SECRET = "super_secret_key";
 const authService = new AuthService();
 
 passport.use(
-    new BearerStrategy((token, done) => {
+    new BearerStrategy(async (token, done) => {
         try {
             const payload = jwt.verify(token, JWT_SECRET) as { email: string };
 
-            const user = authService.getUserByEmail(payload.email);
+            const user = await authService.getUserByEmail(payload.email);
 
             if (!user) {
                 return done(null, false);

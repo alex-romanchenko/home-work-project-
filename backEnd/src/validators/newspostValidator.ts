@@ -9,10 +9,8 @@ const createSchema = {
     properties: {
         title: { type: "string", maxLength: 50 },
         text: { type: "string", maxLength: 256 },
-        genre: { type: "string", enum: ["Politic", "Business", "Sport", "Other"] },
-        isPrivate: { type: "boolean" },
     },
-    required: ["title", "text", "genre", "isPrivate"],
+    required: ["title", "text"],
     additionalProperties: false,
 };
 
@@ -21,8 +19,6 @@ const updateSchema = {
     properties: {
         title: { type: "string", maxLength: 50 },
         text: { type: "string", maxLength: 256 },
-        genre: { type: "string", enum: ["Politic", "Business", "Sport", "Other"] },
-        isPrivate: { type: "boolean" },
     },
     additionalProperties: false,
 };

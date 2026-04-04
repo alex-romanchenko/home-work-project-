@@ -5,7 +5,7 @@ import type { LoginData, RegisterData } from "../types/User";
 const router = Router();
 const authService = new AuthService();
 
-router.post("/register", (req: Request, res: Response, next: NextFunction) => {
+router.post("/register", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const data: RegisterData = {
             email: req.body.email,
@@ -13,21 +13,21 @@ router.post("/register", (req: Request, res: Response, next: NextFunction) => {
             confirmPassword: req.body.confirmPassword,
         };
 
-        const result = authService.register(data);
+        const result = await authService.register(data);
         res.json(result);
     } catch (error) {
         next(error);
     }
 });
 
-router.post("/login", (req: Request, res: Response, next: NextFunction) => {
+router.post("/login", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const data: LoginData = {
             email: req.body.email,
             password: req.body.password,
         };
 
-        const result = authService.login(data);
+        const result = await authService.login(data);
         res.json(result);
     } catch (error) {
         next(error);
