@@ -13,11 +13,15 @@ export class NewspostsRepository {
 
     public async getAll(params: PaginationParams): Promise<Newspost[]> {
         return this.newspostRepository.find({
+            where: {
+                deleted: false,
+            },
             relations: ["author"],
             select: {
                 id: true,
-                title: true,
+                header: true,
                 text: true,
+                deleted: false,
                 author: {
                     id: true,
                     email: true,
@@ -33,17 +37,18 @@ export class NewspostsRepository {
 
     public async getById(id: number): Promise<Newspost | null> {
         return this.newspostRepository.findOne({
-            where: { id },
+            where: { id, deleted: false },
             relations: ["author"],
             select: {
-            id: true,
-            title: true,
-            text: true,
-            author: {
                 id: true,
-                email: true,
+                header: true,
+                text: true,
+                deleted: false,
+                author: {
+                    id: true,
+                    email: true,
+                },
             },
-        },
         });
     }
 
@@ -57,7 +62,7 @@ export class NewspostsRepository {
     }
 
     const newspost = this.newspostRepository.create({
-        title: data.title,
+        header: data.header,
         text: data.text,
         author: user,
     });
@@ -69,7 +74,7 @@ export class NewspostsRepository {
         relations: ["author"],
         select: {
             id: true,
-            title: true,
+            header: true,
             text: true,
             author: {
                 id: true,
@@ -81,7 +86,7 @@ export class NewspostsRepository {
 
 public async update(id: number, update: NewsPostUpdateData): Promise<Newspost | null> {
     const newspost = await this.newspostRepository.findOne({
-        where: { id },
+        where: { id, deleted: false},
         relations: ["author"],
     });
 
@@ -89,8 +94,8 @@ public async update(id: number, update: NewsPostUpdateData): Promise<Newspost | 
         return null;
     }
 
-    if (update.title !== undefined) {
-        newspost.title = update.title;
+    if (update.header !== undefined) {
+        newspost.header = update.header;
     }
 
     if (update.text !== undefined) {
@@ -104,7 +109,7 @@ public async update(id: number, update: NewsPostUpdateData): Promise<Newspost | 
         relations: ["author"],
         select: {
             id: true,
-            title: true,
+            header: true,
             text: true,
             author: {
                 id: true,
@@ -116,14 +121,15 @@ public async update(id: number, update: NewsPostUpdateData): Promise<Newspost | 
 
     public async delete(id: number): Promise<number | null> {
         const newspost = await this.newspostRepository.findOne({
-            where: { id },
+            where: { id, deleted: false },
         });
 
         if (!newspost) {
             return null;
         }
 
-        await this.newspostRepository.remove(newspost);
+        newspost.deleted = true;
+        await this.newspostRepository.save(newspost);
 
         return id;
     }

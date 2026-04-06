@@ -1,23 +1,13 @@
-# Homework typeORM
+# Homework transaction and migration
 
-## Backend
-- Node.js
-- TypeORM
-- PostgreSQL
-- JWT Auth
+1. Install dependencies:
+npm install
 
-## Frontend
-- React
-- CRUD for newsposts
+2. Run migrations:
+npm run migration:run
 
-## Features
-- Register/Login
-- Create post with автор
-- Edit/Delete post
+3. Run seed:
+npm run seed
 
-## Features
-- User registration & login (JWT)
-- Create / update / delete news posts
-- Only author can edit/delete post
-- Frontend UI with React
-- Validation with AJV
+4. Start server:
+npm run dev

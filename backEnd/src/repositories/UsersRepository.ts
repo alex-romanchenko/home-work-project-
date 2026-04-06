@@ -12,8 +12,8 @@ public async getByEmail(email: string): Promise<User | null> {
         .getOne();
 }
 
-    public async create(user: Omit<User, "id" | "newsposts">): Promise<User> {
-        const newUser = this.usersRepository.create(user);
-        return this.usersRepository.save(newUser);
-    }
+public async create(user: Omit<User, "id" | "newsposts" | "deleted">): Promise<User> {
+    const newUser = this.usersRepository.create(user);
+    return this.usersRepository.save(newUser);
+}
 }

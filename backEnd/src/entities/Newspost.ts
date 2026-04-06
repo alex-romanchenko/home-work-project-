@@ -1,16 +1,19 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { User } from "./User";
 
-@Entity()
+@Entity("newspost")
 export class Newspost {
     @PrimaryGeneratedColumn()
     id!: number;
 
     @Column()
-    title!: string;
+    header!: string;
 
     @Column()
     text!: string;
+
+    @Column({ default: false })
+    deleted!: boolean;
 
     @ManyToOne(() => User, (user) => user.newsposts)
     author!: User;

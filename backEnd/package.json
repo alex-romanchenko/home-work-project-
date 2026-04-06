@@ -5,13 +5,21 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "typeorm": "typeorm-ts-node-commonjs -d src/data-source.ts",
+    "migration:generate": "npm run typeorm -- migration:generate src/migrations/Init",
+    "migration:create": "npm run typeorm -- migration:create src/migrations/ManualMigration",
+    "migration:run": "npm run typeorm -- migration:run",
+    "migration:revert": "npm run typeorm -- migration:revert",
+    "seed": "ts-node src/seed.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@faker-js/faker": "^10.4.0",
     "ajv": "^8.18.0",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
@@ -31,6 +39,7 @@
     "@types/node": "^25.5.0",
     "@types/passport-http-bearer": "^1.0.42",
     "ts-node": "^10.9.2",
+    "typeorm-ts-node-commonjs": "^0.3.20",
     "typescript": "^5.9.3"
   }
 }

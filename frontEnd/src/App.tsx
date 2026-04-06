@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import "./App.css";
 
 type NewsPost = {
   id: number;
-  title: string;
+  header: string;
   text: string;
   author: {
     id: number;
@@ -12,11 +13,11 @@ type NewsPost = {
 
 function App() {
   const [news, setNews] = useState<NewsPost[]>([]);
-  const [title, setTitle] = useState("");
+  const [header, setHeader] = useState("");
   const [text, setText] = useState("");
 
   const [editingPost, setEditingPost] = useState<NewsPost | null>(null);
-  const [editTitle, setEditTitle] = useState("");
+  const [editHeader, setEditHeader] = useState("");
   const [editText, setEditText] = useState("");
 
   const [authMode, setAuthMode] = useState<"login" | "register">("login");
@@ -29,15 +30,15 @@ function App() {
   const [loginPassword, setLoginPassword] = useState("");
 
   const [token, setToken] = useState(localStorage.getItem("token") || "");
-  const [currentUserEmail, setCurrentUserEmail] = useState(localStorage.getItem("userEmail") || "");
+  const [currentUserEmail, setCurrentUserEmail] = useState(
+    localStorage.getItem("userEmail") || ""
+  );
   const [errorMessage, setErrorMessage] = useState("");
 
   const loadNews = () => {
     fetch("http://localhost:8000/api/newsposts")
-      .then((response) => response.json())
-      .then((data) => {
-        setNews(data);
-      });
+      .then((res) => res.json())
+      .then((data) => setNews(data));
   };
 
   useEffect(() => {
@@ -47,7 +48,7 @@ function App() {
   const handleRegister = async () => {
     setErrorMessage("");
 
-    const response = await fetch("http://localhost:8000/auth/register", {
+    const res = await fetch("http://localhost:8000/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -59,51 +60,48 @@ function App() {
       }),
     });
 
-    const data = await response.json();
+    const data = await res.json();
 
     if (data.token) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("userEmail", registerEmail);
       setToken(data.token);
       setCurrentUserEmail(registerEmail);
-
       setRegisterEmail("");
       setRegisterPassword("");
       setRegisterConfirmPassword("");
     } else {
-      setErrorMessage("Register failed");
+      setErrorMessage(data.error || "Register failed");
     }
   };
 
   const handleLogin = async () => {
-  setErrorMessage("");
+    setErrorMessage("");
 
-  const response = await fetch("http://localhost:8000/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email: loginEmail,
-      password: loginPassword,
-    }),
-  });
+    const res = await fetch("http://localhost:8000/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: loginEmail,
+        password: loginPassword,
+      }),
+    });
 
-  const data = await response.json();
-  console.log("login response:", data);
+    const data = await res.json();
 
-  if (data.token) {
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("userEmail", loginEmail);
-    setToken(data.token);
-    setCurrentUserEmail(loginEmail);
-
-    setLoginEmail("");
-    setLoginPassword("");
-  } else {
-    setErrorMessage(data.message || data.error || "Login failed");
-  }
-};
+    if (data.token) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userEmail", loginEmail);
+      setToken(data.token);
+      setCurrentUserEmail(loginEmail);
+      setLoginEmail("");
+      setLoginPassword("");
+    } else {
+      setErrorMessage(data.error || "Login failed");
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -113,9 +111,7 @@ function App() {
   };
 
   const handleAddNews = async () => {
-    if (!title.trim() || !text.trim() || !token) {
-      return;
-    }
+    if (!header.trim() || !text.trim() || !token) return;
 
     await fetch("http://localhost:8000/api/newsposts", {
       method: "POST",
@@ -123,10 +119,10 @@ function App() {
         "Content-Type": "application/json",
         Authorization: token,
       },
-      body: JSON.stringify({ title, text }),
+      body: JSON.stringify({ header, text }),
     });
 
-    setTitle("");
+    setHeader("");
     setText("");
     loadNews();
   };
@@ -141,19 +137,18 @@ function App() {
 
   const openEditModal = (post: NewsPost) => {
     setEditingPost(post);
-    setEditTitle(post.title);
+    setEditHeader(post.header);
     setEditText(post.text);
   };
 
   const closeEditModal = () => {
     setEditingPost(null);
-    setEditTitle("");
+    setEditHeader("");
     setEditText("");
   };
 
   const handleSaveEdit = async () => {
     if (!editingPost) return;
-    if (!editTitle.trim() || !editText.trim()) return;
 
     await fetch(`http://localhost:8000/api/newsposts/${editingPost.id}`, {
       method: "PUT",
@@ -161,7 +156,7 @@ function App() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        title: editTitle,
+        header: editHeader,
         text: editText,
       }),
     });
@@ -171,59 +166,22 @@ function App() {
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#f5f5f5",
-        padding: "40px 20px",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "700px",
-          margin: "0 auto",
-        }}
-      >
-        <h1 style={{ textAlign: "center", marginBottom: "30px" }}>News App</h1>
+    <div className="app">
+      <div className="container">
+        <h1 className="title">News App</h1>
 
         {!token ? (
-          <div
-            style={{
-              background: "#fff",
-              borderRadius: "12px",
-              padding: "24px",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-              marginBottom: "30px",
-            }}
-          >
-            <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+          <div className="card auth-card">
+            <div className="tabs">
               <button
+                className={authMode === "login" ? "tab active" : "tab"}
                 onClick={() => setAuthMode("login")}
-                style={{
-                  flex: 1,
-                  padding: "10px",
-                  background: authMode === "login" ? "#222" : "#ddd",
-                  color: authMode === "login" ? "#fff" : "#000",
-                  border: "none",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                }}
               >
                 Login
               </button>
-
               <button
+                className={authMode === "register" ? "tab active" : "tab"}
                 onClick={() => setAuthMode("register")}
-                style={{
-                  flex: 1,
-                  padding: "10px",
-                  background: authMode === "register" ? "#222" : "#ddd",
-                  color: authMode === "register" ? "#fff" : "#000",
-                  border: "none",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                }}
               >
                 Register
               </button>
@@ -231,142 +189,109 @@ function App() {
 
             {authMode === "login" ? (
               <>
-                <h2 style={{ marginBottom: "16px" }}>Login</h2>
+                <h2 className="section-title">Login</h2>
                 <input
-                  type="email"
+                  className="input"
                   placeholder="Email"
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
-                  style={inputStyle}
                 />
                 <input
-                  type="password"
+                  className="input"
                   placeholder="Password"
+                  type="password"
                   value={loginPassword}
                   onChange={(e) => setLoginPassword(e.target.value)}
-                  style={inputStyle}
                 />
-                <button onClick={handleLogin} style={mainButtonStyle}>
+                <button className="btn btn-primary" onClick={handleLogin}>
                   Login
                 </button>
               </>
             ) : (
               <>
-                <h2 style={{ marginBottom: "16px" }}>Register</h2>
+                <h2 className="section-title">Register</h2>
                 <input
-                  type="email"
+                  className="input"
                   placeholder="Email"
                   value={registerEmail}
                   onChange={(e) => setRegisterEmail(e.target.value)}
-                  style={inputStyle}
                 />
                 <input
-                  type="password"
+                  className="input"
                   placeholder="Password"
+                  type="password"
                   value={registerPassword}
                   onChange={(e) => setRegisterPassword(e.target.value)}
-                  style={inputStyle}
                 />
                 <input
+                  className="input"
+                  placeholder="Confirm password"
                   type="password"
-                  placeholder="Confirm Password"
                   value={registerConfirmPassword}
                   onChange={(e) => setRegisterConfirmPassword(e.target.value)}
-                  style={inputStyle}
                 />
-                <button onClick={handleRegister} style={mainButtonStyle}>
+                <button className="btn btn-primary" onClick={handleRegister}>
                   Register
                 </button>
               </>
             )}
 
-            {errorMessage && (
-              <p style={{ color: "crimson", marginTop: "12px" }}>{errorMessage}</p>
-            )}
+            {errorMessage && <p className="error">{errorMessage}</p>}
           </div>
         ) : (
           <>
-            <div
-              style={{
-                background: "#fff",
-                borderRadius: "12px",
-                padding: "20px",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                marginBottom: "20px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
+            <div className="card topbar">
               <div>
                 Logged in as: <strong>{currentUserEmail}</strong>
               </div>
-              <button onClick={handleLogout} style={secondaryButtonStyle}>
+              <button className="btn btn-secondary" onClick={handleLogout}>
                 Logout
               </button>
             </div>
 
-            <div
-              style={{
-                background: "#fff",
-                borderRadius: "12px",
-                padding: "20px",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                marginBottom: "30px",
-              }}
-            >
-              <h2 style={{ marginBottom: "16px" }}>Create post</h2>
+            <div className="card create-card">
+              <h2 className="section-title">Create post</h2>
               <input
-                type="text"
-                placeholder="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                style={inputStyle}
+                className="input"
+                placeholder="Header"
+                value={header}
+                onChange={(e) => setHeader(e.target.value)}
               />
               <textarea
+                className="input textarea"
                 placeholder="Text"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                style={{
-                  ...inputStyle,
-                  minHeight: "120px",
-                  resize: "vertical",
-                }}
               />
-              <button onClick={handleAddNews} style={mainButtonStyle}>
+              <button className="btn btn-primary" onClick={handleAddNews}>
                 Add News
               </button>
             </div>
           </>
         )}
 
-        <div>
+        <div className="posts">
           {news.map((post) => {
             const isAuthor = currentUserEmail === post.author?.email;
 
             return (
-              <div
-                key={post.id}
-                style={{
-                  background: "#fff",
-                  borderRadius: "12px",
-                  padding: "20px",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                  marginBottom: "16px",
-                }}
-              >
-                <h2 style={{ marginBottom: "10px" }}>{post.title}</h2>
-                <p style={{ marginBottom: "10px" }}>{post.text}</p>
-                <small style={{ color: "#666" }}>
-                  Author: {post.author?.email}
-                </small>
+              <div className="card post-card" key={post.id}>
+                <h2 className="post-header">{post.header}</h2>
+                <p className="post-text">{post.text}</p>
+                <small className="post-author">Author: {post.author?.email}</small>
 
                 {isAuthor && (
-                  <div style={{ marginTop: "16px", display: "flex", gap: "10px" }}>
-                    <button onClick={() => openEditModal(post)} style={secondaryButtonStyle}>
+                  <div className="post-actions">
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => openEditModal(post)}
+                    >
                       Edit
                     </button>
-                    <button onClick={() => handleDelete(post.id)} style={dangerButtonStyle}>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => handleDelete(post.id)}
+                    >
                       Delete
                     </button>
                   </div>
@@ -378,51 +303,24 @@ function App() {
       </div>
 
       {editingPost && (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.45)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "20px",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              maxWidth: "500px",
-              background: "#fff",
-              borderRadius: "12px",
-              padding: "24px",
-              boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
-            }}
-          >
-            <h2 style={{ marginBottom: "16px" }}>Edit post</h2>
-
+        <div className="modal-overlay">
+          <div className="modal">
+            <h2 className="section-title">Edit post</h2>
             <input
-              type="text"
-              value={editTitle}
-              onChange={(e) => setEditTitle(e.target.value)}
-              style={inputStyle}
+              className="input"
+              value={editHeader}
+              onChange={(e) => setEditHeader(e.target.value)}
             />
-
             <textarea
+              className="input textarea"
               value={editText}
               onChange={(e) => setEditText(e.target.value)}
-              style={{
-                ...inputStyle,
-                minHeight: "120px",
-                resize: "vertical",
-              }}
             />
-
-            <div style={{ display: "flex", gap: "10px" }}>
-              <button onClick={handleSaveEdit} style={mainButtonStyle}>
+            <div className="modal-actions">
+              <button className="btn btn-primary" onClick={handleSaveEdit}>
                 Save
               </button>
-              <button onClick={closeEditModal} style={secondaryButtonStyle}>
+              <button className="btn btn-secondary" onClick={closeEditModal}>
                 Cancel
               </button>
             </div>
@@ -432,43 +330,5 @@ function App() {
     </div>
   );
 }
-
-const inputStyle = {
-  display: "block",
-  width: "100%",
-  marginBottom: "12px",
-  padding: "12px",
-  border: "1px solid #ccc",
-  borderRadius: "8px",
-  fontSize: "16px",
-  boxSizing: "border-box" as const,
-};
-
-const mainButtonStyle = {
-  padding: "10px 16px",
-  background: "#222",
-  color: "#fff",
-  border: "none",
-  borderRadius: "8px",
-  cursor: "pointer",
-};
-
-const secondaryButtonStyle = {
-  padding: "10px 16px",
-  background: "#ddd",
-  color: "#000",
-  border: "none",
-  borderRadius: "8px",
-  cursor: "pointer",
-};
-
-const dangerButtonStyle = {
-  padding: "10px 16px",
-  background: "crimson",
-  color: "#fff",
-  border: "none",
-  borderRadius: "8px",
-  cursor: "pointer",
-};
 
 export default App;

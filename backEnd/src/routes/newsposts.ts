@@ -58,7 +58,7 @@ router.post(
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             const data: NewsPostCreateData = {
-                title: req.body.title,
+                header: req.body.header,
                 text: req.body.text,
             };
 
@@ -84,8 +84,8 @@ router.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
 
         const updateData: NewsPostUpdateData = {};
 
-        if (req.body.title !== undefined) {
-            updateData.title = req.body.title;
+        if (req.body.header !== undefined) {
+            updateData.header = req.body.header;
         }
 
         if (req.body.text !== undefined) {

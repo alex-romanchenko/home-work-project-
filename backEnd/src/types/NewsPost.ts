@@ -1,21 +1,21 @@
 export interface NewsPost {
     id: number;
-    title: string;
+    header: string;
     text: string;
+    deleted: boolean;
     author: {
         id: number;
         email: string;
-        password: string;
     };
 }
 
 export type NewsPostCreateData = {
-    title: string;
+    header: string;
     text: string;
 };
 
 export type NewsPostUpdateData = {
-    title?: string;
+    header?: string;
     text?: string;
 };
 
