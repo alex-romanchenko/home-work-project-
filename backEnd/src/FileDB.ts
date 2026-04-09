@@ -57,7 +57,7 @@ export class FileDB {
             return JSON.parse(raw) as Record<string, unknown>;
         } catch (error) {
             if (error instanceof SyntaxError) {
-                throw new Error("db.json contains invalid JSON");
+                throw new Error("db.json contains invalid JSON"), { cause: error };
             }
 
             throw error;

@@ -12,7 +12,8 @@
     "migration:create": "npm run typeorm -- migration:create src/migrations/ManualMigration",
     "migration:run": "npm run typeorm -- migration:run",
     "migration:revert": "npm run typeorm -- migration:revert",
-    "seed": "ts-node src/seed.ts"
+    "seed": "ts-node src/seed.ts",
+    "lint": "eslint src"
   },
   "keywords": [],
   "author": "",
@@ -33,13 +34,18 @@
     "winston": "^3.19.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.5.0",
     "@types/passport-http-bearer": "^1.0.42",
+    "eslint": "^10.2.0",
+    "globals": "^17.4.0",
+    "jiti": "^2.6.1",
     "ts-node": "^10.9.2",
     "typeorm-ts-node-commonjs": "^0.3.20",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.58.1"
   }
 }

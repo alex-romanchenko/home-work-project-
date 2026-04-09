@@ -7,8 +7,11 @@ export const errorHandler = (
     error: Error,
     req: Request,
     res: Response,
-    next: NextFunction
+    _next: NextFunction
 ): void => {
+    void _next;
+    void req;
+
     if (error instanceof ValidationError) {
         logger.warn(`${error.message}. Details: ${error.details.join(", ")}`);
         res.status(400).json({
