@@ -21,7 +21,6 @@ dotenv.config();
 
 const app = express();
 
-const HOST = process.env.HOST || "localhost";
 const PORT = Number(process.env.PORT) || 8000;
 
 app.use(cors());
@@ -43,8 +42,8 @@ AppDataSource.initialize()
     .then(() => {
         console.log("Database connected");
 
-        app.listen(PORT, HOST, () => {
-            console.log(`Server is running at http://${HOST}:${PORT}`);
+        app.listen(PORT, () => {
+            console.log(`Server is running at ${PORT}`);
         });
     })
     .catch((error) => {
